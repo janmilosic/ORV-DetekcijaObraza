@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 def zmanjsaj_sliko(slika, sirina, visina):
-    pass
+    return cv.resize(slika, (sirina, visina))
 
 def doloci_barvo_koze(slika, levo_zgoraj, desno_spodaj):
     pass
@@ -15,4 +15,6 @@ def obdelaj_sliko_s_skatlami(slika, sirina_skatle, visina_skatle, barva_koze):
     pass
 
 if __name__ == '__main__':
-    pass
+    kamera = cv.VideoCapture(0)
+    ret, slika = kamera.read()
+    slika = zmanjsaj_sliko(slika, 340, 220)

@@ -15,4 +15,6 @@ def obdelaj_sliko_s_skatlami(slika, sirina_skatle, visina_skatle, barva_koze):
     pass
 
 if __name__ == '__main__':
-    pass
+    kamera = cv.VideoCapture(0)
+    ret, slika = kamera.read()
+    slika = zmanjsaj_sliko(slika, 340, 220)

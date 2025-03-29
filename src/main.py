@@ -42,6 +42,14 @@ def obdelaj_sliko_s_skatlami(slika, sirina_skatle, visina_skatle, barva_koze):
         rezultat.append(vrstica)
     return rezultat
 
+def narisi_skatle(slika, seznam, sirina_skatle, visina_skatle, prag=500):
+    for i, vrstica in enumerate(seznam):
+        for j, st_pikslov in enumerate(vrstica):
+            if st_pikslov > prag:
+                x = j * sirina_skatle
+                y = i * visina_skatle
+                cv.rectangle(slika, (x, y), (x+sirina_skatle, y+visina_skatle), (0, 255, 0), 2)
+
 def mouse_callback(event, x, y, flags, param):
     global risanje, p_zacetek, p_konec
     if event == cv.EVENT_LBUTTONDOWN:

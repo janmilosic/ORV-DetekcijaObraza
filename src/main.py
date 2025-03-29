@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 def zmanjsaj_sliko(slika, sirina, visina):
-    pass
+    return cv.resize(slika, (sirina, visina))
 
 def doloci_barvo_koze(slika, levo_zgoraj, desno_spodaj):
     pass

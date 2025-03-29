@@ -63,3 +63,6 @@ if __name__ == '__main__':
     levo_zgoraj = (min(p_zacetek[0], p_konec[0]), min(p_zacetek[1], p_konec[1]))
     desno_spodaj = (max(p_zacetek[0], p_konec[0]), max(p_zacetek[1], p_konec[1]))
     barva_koze = doloci_barvo_koze(slika, levo_zgoraj, desno_spodaj)
+
+    st_koze = prestej_piksle_z_barvo_koze(slika, barva_koze)
+    print("Number of skin pixels:", st_koze)

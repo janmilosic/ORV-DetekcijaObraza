@@ -27,7 +27,28 @@ def prestej_piksle_z_barvo_koze(slika, barva_koze):
     return cv.countNonZero(maska)
 
 def obdelaj_sliko_s_skatlami(slika, sirina_skatle, visina_skatle, barva_koze):
-    pass
+    visina, sirina, _ = slika.shape
+    st_vrstic = visina // visina_skatle
+    st_stolpcev = sirina // sirina_skatle
+    rezultat = []
+    for i in range(st_vrstic):
+        vrstica = []
+        for j in range(st_stolpcev):
+            x = j * sirina_skatle
+            y = i * visina_skatle
+            skatla = slika[y:y+visina_skatle, x:x+sirina_skatle]
+            st_pikslov = prestej_piksle_z_barvo_koze(skatla, barva_koze)
+            vrstica.append(st_pikslov)
+        rezultat.append(vrstica)
+    return rezultat
+
+def narisi_skatle(slika, seznam, sirina_skatle, visina_skatle, prag=500):
+    for i, vrstica in enumerate(seznam):
+        for j, st_pikslov in enumerate(vrstica):
+            if st_pikslov > prag:
+                x = j * sirina_skatle
+                y = i * visina_skatle
+                cv.rectangle(slika, (x, y), (x+sirina_skatle, y+visina_skatle), (0, 255, 0), 2)
 
 def mouse_callback(event, x, y, flags, param):
     global risanje, p_zacetek, p_konec

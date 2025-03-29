@@ -97,6 +97,7 @@ if __name__ == '__main__':
     skatla_h = int(220 * 0.15)
 
     while True:
+        start = time.time()
         ret, frame = kamera.read()
         if not ret:
             break
@@ -105,6 +106,9 @@ if __name__ == '__main__':
         seznam = obdelaj_sliko_s_skatlami(frame, skatla_w, skatla_h, barva_koze)
         narisi_skatle(frame, seznam, skatla_w, skatla_h)
 
+        # Izracunamo FPS in ga izpisemo
+        fps = 1 / (time.time() - start)
+        cv.putText(frame, f'FPS: {fps:.2f}', (10, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
         cv.imshow('Detekcija obraza', frame)
 
         if cv.waitKey(1) & 0xFF == ord('q'):

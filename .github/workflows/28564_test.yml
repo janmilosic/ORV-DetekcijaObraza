@@ -35,7 +35,7 @@ jobs:
     needs: preveri_teste
     strategy:
       matrix:
-        python-version: [3.8, 3.10]
+        python-version: [ "3.8", "3.10" ]
 
     steps:
       - name: Kloniraj repozitorij

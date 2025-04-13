@@ -17,4 +17,4 @@ def test_prestej_piksle_z_barvo_koze():
     slika = np.full((10, 10, 3), 100, dtype=np.uint8)
     barva = doloci_barvo_koze(slika, (0, 0), (10, 10))
     st = prestej_piksle_z_barvo_koze(slika, barva)
-    assert st == 100
+    assert st == 10

@@ -56,7 +56,7 @@ jobs:
 
       - name: Pozeni teste
         run: |
-          pytest || echo "Napaka pri testih." > napaka.txt
+          pytest || (echo "Napaka pri testih." > napaka.txt && exit 1)
 
       - name: Shranjevanje napake
         if: failure()

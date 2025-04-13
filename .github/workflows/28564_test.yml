@@ -1,9 +1,11 @@
 name: Testiranje
 
+# Proži se ob vsakem pushu na git
 on:
   push:
     branches: [ "main" ]
 
+# Uporabimo self-hosted runnerja
 jobs:
   preveri_teste:
     name: Preveri teste
@@ -13,7 +15,7 @@ jobs:
       - name: Kloniraj repozitorij
         uses: actions/checkout@v4
 
-      - name: Ali datoteka test obstaja
+      - name: Ali datoteka test obstaja # Preverjanje ali test datoteka obstaja
         run: |
           if ls src/test_*.py 1> /dev/null 2>&1; then
             echo "Testi obstajajo"
@@ -22,6 +24,7 @@ jobs:
             exit 1
           fi
 
+      # Shranjevanje artefakta ob napaki
       - name: Shrani napako
         if: failure()
         uses: actions/upload-artifact@v4
@@ -32,10 +35,10 @@ jobs:
   testiranje:
     name: Testiranje naloge
     runs-on: self-hosted
-    needs: preveri_teste
+    needs: preveri_teste # Ta posel izvedemo, le ko preveri_teste uspe
     strategy:
       matrix:
-        python-version: [ "3.8", "3.10" ]
+        python-version: [ "3.8", "3.10" ] # Uporaba dveh različic Pythona
 
     steps:
       - name: Kloniraj repozitorij
@@ -44,7 +47,7 @@ jobs:
       - name: Nastavi Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.python-version }} # Nastavi verzijo iz matrike
 
       - name: Namesti odvisnosti
         run: |
@@ -59,5 +62,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: test-napaka
+          name: test-napaka # Artifakt za napake
           path: napaka.txt

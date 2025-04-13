@@ -1,0 +1,63 @@
+name: Testiranje
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  preveri_teste:
+    name: Preveri teste
+    runs-on: self-hosted
+
+    steps:
+      - name: Kloniraj repozitorij
+        uses: actions/checkout@v4
+
+      - name: Ali datoteka test obstaja
+        run: |
+          if ls test_*.py 1> /dev/null 2>&1; then
+            echo "Testi obstajajo"
+          else
+            echo "Testi ne obstajajo" > napaka.txt
+            exit 1
+          fi
+
+      - name: Shrani napako
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: napaka
+          path: napaka.txt
+
+  testiranje:
+    name: Testiranje naloge
+    runs-on: self-hosted
+    needs: preveri_teste
+    strategy:
+      matrix:
+        python-version: [3.8, 3.10]
+
+    steps:
+      - name: Kloniraj repozitorij
+        uses: actions/checkout@v4
+
+      - name: Nastavi Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Namesti odvisnosti
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Pozeni teste
+        run: |
+          pytest || echo "Napaka pri testih." > napaka.txt
+
+      - name: Shranjevanje napake
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-napaka
+          path: napaka.txt

@@ -24,7 +24,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Docker build
-      run: docker build -t janmilosic/ORV-DetekcijaObraza:latest . # Zgradi sliko
+      run: docker build -t janmilosic/orv-detekcijaobraza:latest . # Zgradi sliko
 
     - name: Docker push
-      run: docker push janmilosic/ORV-DetekcijaObraza:latest # Potisne sliko na DockerHub
+      run: docker push janmilosic/orv-detekcijaobraza:latest # Potisne sliko na DockerHub
